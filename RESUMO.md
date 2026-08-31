@@ -65,4 +65,60 @@ Isso significa que, conforme a quantidade de vértices aumenta, a quantidade de 
 
 | Tópico | Descrição |
 |---|---|
+| **Caminho** | É uma cadeia de um grafo orientado o qual a orientação dos arcos é sempre a mesma a partir do vértice inicial e consegue alcançar até o vértice final. No caso não orientado, percurso = caminho. |
 | **Percurso/Cadeia** | É uma sequência de ligações sucessivamente adjacentes, onde cada ligação possui uma extremidade adjacente à ligação anterior e outra extremidade adjacente à ligação subsequente. |
+
+## Conexidade - Grafos
+
+| Tópico | Descrição |
+|---|---|
+| **Conexidade** | possibilidade de passagem de um vértice a outra em um grafo através das ligações existentes, traduzindo o **estado de ligação** e adquirindo aspectos diferentes conforme o grafo sendo **orientado ou não**, voltado para atingibilidade especialmente em **grafos orientados**. Nos grafos não orientados as noções de atingibilidade (relacionada a pares de vértices) e de conexidade (relacionado a grafos como um todo) são correspondentes. |
+
+Um **grafo não-direcionado G = (V, E)** é **conexo** se existe um caminho G entre todo o part de vértices de V.
+
+Um **grafo direcionado G = (V, E)**, são definidos quatro tipos de conexidade: **desconexo**, simplesmente conexo (**s-conexo**), semi-fortemente conexo (**sf-conexo**) e fortemente conexo (**f-conexo**).
+
+Um **grafo direcionado G = (V, A)** é **desconexo** se nele existir ao menos um part de vértices não unidos por uma cadeia.
+
+Um **grafo direcionado G = (V, A)** é **simplesmente conexo (s-conexo)** no qual todo par de vértices é unido por ao menos uma cadeia.
+
+Um **grafo direcionado G = (V, A)** é **semi-fortemente conexo (sf-conexo)** quando, em todo o part de vértices ao menos um deles é atingível a partir do outro (logo, entre eles, existe em ao menos um dos dois sentidos possíveis)
+
+Um **grafo direcionado G = (V, A)** é **fortemente conexo (f-conexo)** é sempre também sf-conexo e s-conexo, e que tdo grafo sf-conexo é s conexo. Para evitar dúvidas, utiliza-se classificação em **categorias de conexidade**.
+
+Diz-se então que um grafo orientado pertence a categoria:
+ - C3, se é f-conexo
+ - C2, se é sf-conexo e não é f-conexo
+ - C1, se é s-conexo e não é sf-conexo
+ - C0, se é desconexo
+
+Em um grafo f-conexo G - (V, A):
+ - Todo vértice é atingível de si mesmo: relação reflexiva
+ - Se x é atingível de y, então y é atingível de x: relação simétrica
+ - Se z é atingível de y e y é atingível de x, então z é atingível de x: relação transitiva.
+
+A atingibilidade é uma relação reflexiva, simétrica e transitiva dizemos então que é uma **relação de equivalência**
+
+### Grafo direcionado - Componentes f-conexas
+
+Sobre o conjunto de vértices de um grafo orientado qualquer G = (V, A) definimos uma **partição S**:
+
+Sejam os subgrafos correspondentes aos $$\mid S_i$$ como sendo partição contendo componentes f-conexas.
+
+$$
+S = \left\{ S_i \mid S_i \subset V,\; S_i \cap S_j = \varnothing,\; i,j=1,\ldots,r,\; i\neq j \right\}
+$$
+
+Sendo este, do conjuento de vértices **V**.
+
+Defini-se **grafo reduzido** um Grafo G = (V, A), obtido de um grafo G (orientado ou não) através de uma sequência de contrações de vértices, feitas segundo um critério pré-definido.
+
+Podemos reduzir um grafo orientado G por meio de suas componentes f-conexas.
+
+Um grafo orientado G = (V,A) originará um grafo reduzido Gr = (S, W), onde S é a partição de Gr, em componentes f-conexas e W sendo:
+
+$$
+W = \left\{ (S_i, S_j) \mid \exists (x,y),\; x \in S_i,\; y \in S_j \right\}
+$$
+
+Sendo W um conjunto dos arcos que unem essas componentes.
