@@ -78,3 +78,82 @@ O **ponto de equilíbrio** teórico ocorre quando $E \approx V^2$, considerando 
 ## Sobre o item (a)
 
 Você está certo em suspeitar do enunciado! Um grafo simples direcionado com 10.000 vértices pode ter no máximo **~100 milhões** de arestas, não 1 bilhão. Se for 100 milhões, matriz e lista empatam (~381 MB cada), mas a matriz ainda faz sentido pela constante menor e acesso $O(1)$.
+
+Ex 2)
+
+a) Desenhar a matriz de adjacência de GH e GD.
+
+GH:
+
+|   | a | b | c | d | e |
+|---|---|---|---|---|---|
+| a | 0 | 1 | ∞ | ∞ | 10 |
+| b | ∞ | 0 | 5 | ∞ | 8 |
+| c | ∞ | ∞ | 0 | ∞ | ∞ |
+| d | ∞ | ∞ | ∞ | 0 | ∞ |
+| e | ∞ | ∞ | 2 | 15 | 0 |
+
+GD:
+
+|   | a | b | c | d | e | f | g | h |
+|---|---|---|---|---|---|---|---|---|
+| a | 0 | 1 | ∞ | ∞ | 10 | ∞ | ∞ | ∞ |
+| b | 1 | 0 | ∞ | ∞ | 8 | ∞ | ∞ | ∞ |
+| c | ∞ | ∞ | 0 | ∞ | 2 | 2 | ∞ | ∞ |
+| d | ∞ | ∞ | ∞ | 0 | 15 | ∞ | ∞ | ∞ |
+| e | 10 | 8 | 2 | 15 | 0 | 5 | 3 | ∞ |
+| f | ∞ | ∞ | 2 | ∞ | 5 | 0 | 4 | 5 |
+| g | ∞ | ∞ | ∞ | ∞ | 3 | 4 | 0 | ∞ |
+| h | ∞ | ∞ | ∞ | ∞ | ∞ | 5 | ∞ | 0 |
+
+b) Desenhar a lista de adjacência de GH e GD.
+
+GH:
+
+| Vértice | Lista de adjacência |
+|---|---|
+| a | b(1) → e(10) |
+| b | c(5) → e(8) |
+| c | ∅ |
+| d | ∅ |
+| e | c(2) → d(15) |
+
+GD:
+
+| Vértice | Lista de adjacência |
+|---|---|
+| a | b(1) → e(10) |
+| b | a(1) → e(8) |
+| c | e(2) → f(2) |
+| d | e(15) |
+| e | a(10) → b(8) → c(2) → d(15) → f(5) → g(3) |
+| f | c(2) → e(5) → g(4) → h(5) |
+| g | e(3) → f(4) |
+| h | f(5) |
+
+c) Desenhar a matriz de incidência de GH e GD.
+
+GH:
+
+|   | (a, b) | (a, e) | (b, c) | (b, e) | (e, c) | (e, d) |
+|---|---|---|---|---|---|---|
+| a | -1 | -10 | ∞ | ∞ | ∞ | ∞ |
+| b | 1 | ∞ | -5 | -8 | ∞ | ∞ |
+| c | ∞ | ∞ | 5 | ∞ | 2 | ∞ |
+| d | ∞ | ∞ | ∞ | ∞ | ∞ | 15 |
+| e | ∞ | 10 | ∞ | 8 | -2 | -15 |
+
+GD:
+
+|   | (a,b) | (a,e) | (b,e) | (c,e) | (c,f) | (d,e) | (e,f) | (e,g) | (f,g) | (f,h) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| a | 1 | 10 | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ |
+| b | 1 | ∞ | 8 | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ |
+| c | ∞ | ∞ | ∞ | 2 | 2 | ∞ | ∞ | ∞ | ∞ | ∞ |
+| d | ∞ | ∞ | ∞ | ∞ | ∞ | 15 | ∞ | ∞ | ∞ | ∞ |
+| e | ∞ | 10 | 8 | 2 | ∞ | 15 | 5 | 3 | ∞ | ∞ |
+| f | ∞ | ∞ | ∞ | ∞ | 2 | ∞ | 5 | ∞ | 4 | 5 |
+| g | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | 3 | 4 | ∞ |
+| h | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | ∞ | 5 |
+
+Ex 3) Muito igual ao Ex 2
