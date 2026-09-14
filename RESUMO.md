@@ -122,3 +122,21 @@ W = \left\{ (S_i, S_j) \mid \exists (x,y),\; x \in S_i,\; y \in S_j \right\}
 $$
 
 Sendo W um conjunto dos arcos que unem essas componentes.
+
+## Grau
+
+### Grau de Entrada
+
+Em grafos, utiliza-se grau de entrada **d-(x)** para representar o número de vértices que apontam para um vértice **x**.
+
+### Grau de Saída
+
+Em grafos, utiliza-se grau de saída **d+(x)** para representar o número de vértices que o vértice **x** aponta.
+
+## Ordenação de Grafos
+
+Considere uma situação em que é necessário rearranjar com base nas dependências do grafo para ordenar o mesmo.
+
+### Topológica
+
+Nesta ordenação, pega-se os vértices que não possuem dependência (d-() = 0\grau de entrada = 0) e inicialmente insere em uma fila e altera o valor do grau de entrada antes 0 para -1 e remove da fila. O vértice antes dependente deste vértice tem seu grau de entrada decrementado, sendo estes agora, inseridos dentro da fila e realizando o ciclo novamente.
