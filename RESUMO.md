@@ -140,3 +140,25 @@ Considere uma situação em que é necessário rearranjar com base nas dependên
 ### Topológica
 
 Nesta ordenação, pega-se os vértices que não possuem dependência (d-() = 0\grau de entrada = 0) e inicialmente insere em uma fila e altera o valor do grau de entrada antes 0 para -1 e remove da fila. O vértice antes dependente deste vértice tem seu grau de entrada decrementado, sendo estes agora, inseridos dentro da fila e realizando o ciclo novamente.
+
+## Caminho Mínimo
+
+### Algoritmo de Djikstra
+
+### Algoritmo de Bellman-Ford
+
+Procura o melhor *caminho* a partir de uma origem a todos os vértices do grafo.Aceita arcos de valores negativos, porém, encontrará apenas caminhos mínimos se não houver circuitos com valor negativo a partir da origem.
+
+Trabalha com os arcos do grafo, procurando um após o outro em uma dada ordem, para ver se algum deles melhora algum caminho da origem até o vértice de chegada do arco e termina quando uma rodada com todos os arcos não mostrando nenhuma melhora
+
+### Algoritmo de Floyd
+
+Utiliza a determinação de caminhos mínimos unindo todos os pares de vértices, sendo simples, matricial e possui boa performance, podendo ser aplicado a grafos contendo arcos de valor negativo.
+
+Utiliza um vértice base k para a construção de triplas com todos os pares (i,j), i, j pertencentes a V, a serem examinados por desigualdades triangulares (envolvendo três vértices). Sendo os vértices rotulados em ordem numérica de 1 a n, o índuce do vértice base (k) usado em uma iteração corresponderá ao valor do contador de iterações e as desigualdades serão de forma:
+
+$$d^k_{ij} = \min \left( d^{k-1}_{ij}, d^{k-1}_{ik} + d^{k-1}_{kj} \right)$$
+
+As modificações de valor são inscritas na própria matriz de valores vigente D(k-1), que se trasformará em D(k) ao final da iteração.
+
+Para registrar modificações, é utilizado matriz auxiliar que é a matriz de roteamento. Matriz R = [rij] que é uma matriz de índices, inicializada co rij = i; rij = j se vij < infinito; rij = 0 em caso contrário. Elementos da matriz são os rótulos dos vértices.
