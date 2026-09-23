@@ -61,6 +61,37 @@ Isso significa que, conforme a quantidade de vértices aumenta, a quantidade de 
 
 **Importante**: Para Matriz de Incidência em **grafo direcionado ponderado**, troca-se **0** por **∞** e **1/-1** por **p/-p**, sendo **p** o peso dado. Proporcional para a Matriz de incidência em **grafo não-direcionado ponderado**.
 
+## Conceitos iniciais de Grafos:
+
+| Tópico | Descrição |
+|---|---|
+| **Grafo Completo** | É completo se existir uma ligação entre **cada par de vértices distintos** (sem considerar laços). Todas as estruturas desse tipo com a mesma ordem são isomorfas. Grafos completos não-orientados são conhecidos como **cliques** e recebem a notação **Kₙ**. |
+| **Conjunto das Partes** | É o conjunto formado por **todos os subconjuntos** de um conjunto X, denotado por **P(X) ou 2ˣ**. Exemplo: X = {x₁, x₂, x₃, x₄}. Então P(X) contém todos os subconjuntos de X, desde o conjunto vazio até {x₁, x₂, x₃, x₄}. Se X possui n elementos, então P(X) possui **2ⁿ subconjuntos**. Os subconjuntos que possuem exatamente k elementos podem ser contados por **Combinação: C(n,k) = n! / (k!(n-k)!)**. |
+| **Potência Cartesiana** | **Xᵏ** é o conjunto de todas as **k-uplas ordenadas** formadas pelos elementos de X, permitindo repetição. Exemplo: se X = {x₁, x₂, x₃, x₄}, então X² = {(x₁,x₁), (x₁,x₂), (x₁,x₃), (x₁,x₄), (x₂,x₁), ..., (x₄,x₄)}. Como a ordem importa, **(x₁,x₂) ≠ (x₂,x₁)**. Se X possui n elementos, então **|Xᵏ| = nᵏ**. |
+
+## Ligações adjacentes, incidentes e semigrau:
+
+| Tópico | Descrição |
+|---|---|
+| **Semigrau e incidentes** | Em um grafo orientado, um arco **incide exteriormente** em um vértice `x ∈ V` quando `x` é sua **extremidade inicial** (o arco **sai de x**). Um arco **incide interiormente** em `x` quando `x` é sua **extremidade final** (o arco **entra em x**). O conjunto dos arcos incidentes exteriormente em `x` é denotado por **ω⁺(x)** e sua cardinalidade é o **semigrau exterior**, denotado por **d⁺(x)**. Analogamente, o conjunto dos arcos incidentes interiormente em `x` é denotado por **ω⁻(x)** e sua cardinalidade é o **semigrau interior**, denotado por **d⁻(x)** (d é a quantidade enquanto ω é o conjunto) |
+
+### Semigrau — para memorizar
+
+- **ω⁺(x)** = conjunto dos **arcos que saem de x**
+- **d⁺(x)** = **quantidade** de arcos que saem de x
+  - `d⁺(x) = |ω⁺(x)|`
+
+- **ω⁻(x)** = conjunto dos **arcos que entram em x**
+- **d⁻(x)** = **quantidade** de arcos que entram em x
+  - `d⁻(x) = |ω⁻(x)|`
+
+**Macete:**
+
+> **ω = conjunto dos arcos**  
+> **d = quantidade de arcos**  
+> **+ = sai**  
+> **− = entra**
+
 ## Análise de Grafos
 
 | Tópico | Descrição |
