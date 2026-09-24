@@ -1,4 +1,4 @@
-# Resumo da Matéria — Teoria dos Grafos
+# Resumo da Matéria — Teoria dos Grafos - Parei no slide 44 da aula 2
 
 A **Teoria dos Grafos** é uma área da matemática que estuda as relações entre entidades (objetos) que possuem características ou relações relevantes entre si.
 
@@ -20,7 +20,50 @@ Onde:
 | **Grafo Direcionado (Dígrafo)** | É um grafo representado pelo par **G(V, E)**. Uma aresta **(v, w) ∈ E** pode ser representada por **v → w**, sendo **v** o **vértice de origem** do arco e **w** o **vértice de destino**. A ordem dos vértices é importante: **v → w** não é necessariamente igual a **w → v**. |
 | **Grafo Direcionado Acíclico (GDA)** | É um grafo direcionado que não contém ciclos. Isso significa que não é possível seguir as direções das arestas e retornar ao vértice de origem. Todas as árvores são GDA, entretanto, nem todo GDA é uma árvore. |
 | **Grafo Não Direcionado** | É um grafo representado pelo par **G(V, E)** onde os vértices estão conectados por arestas que não possuem direção. Diferentemente de um dígrafo, a ordem dos vértices não importa, pois uma conexão entre **v** e **w** é equivalente à conexão entre **w** e **v**. |
-| **Grafos Rotulados (Ponderados/Valorados)** | Em aplicações práticas, podem ser utilizados valores ou rótulos associados aos vértices e/ou às arestas. Esses valores podem representar diferentes informações, dependendo do problema analisado. |
+| **Grafos Rotulados (Ponderados/Valorados)** | Em aplicações práticas, podem ser utilizados valores ou rótulos associados aos vértices e/ou às arestas/arcos. Esses valores podem representar diferentes informações, dependendo do problema analisado. **Arestas paralelas** são duas ou mais arestas que possuem as mesmas duas extremidades. |
+| **Multigrafo** | É um grafo que permite a existência de **múltiplas arestas paralelas** entre um mesmo par de vértices. |
+| **Grafo Simples** | É um grafo que não contém **arestas paralelas nem laços**. |
+
+### Exemplo — Arestas paralelas em um multigrafo não direcionado
+
+Imagine duas cidades `A` e `B` conectadas por **duas estradas diferentes**:
+
+~~~text
+        Estrada 1
+      ╭────────────╮
+     ╱              ╲
+A ──╯                ╰── B
+     ╲              ╱
+      ╰────────────╯
+        Estrada 2
+~~~
+
+No grafo, podemos representar as duas estradas como duas arestas distintas:
+
+`e₁ = {A, B}`
+
+`e₂ = {A, B}`
+
+As duas arestas possuem os **mesmos dois vértices como extremidades**, mas são arestas diferentes. Portanto, são chamadas de **arestas paralelas**.
+
+Como o grafo é **não direcionado**, cada estrada pode ser percorrida nos dois sentidos:
+
+~~~text
+A ↔ B
+~~~
+
+Isso **não significa** que uma estrada vai de `A` para `B` e a outra de `B` para `A`. Cada estrada, individualmente, pode ser percorrida nos dois sentidos.
+
+- **Não direcionado** → as arestas não possuem direção; `A-B` e `B-A` representam a mesma ligação.
+- **Arestas paralelas** → duas ou mais arestas diferentes possuem as mesmas extremidades.
+- **Multigrafo** → permite a existência de múltiplas arestas paralelas entre um mesmo par de vértices.
+- **Grafo simples** → não permite arestas paralelas nem laços.
+
+**Macete:**
+
+> **Direção** → "A ligação possui sentido?"
+>
+> **Multiplicidade** → "Pode haver mais de uma ligação entre os mesmos vértices?"
 
 ## Representação de Grafos
 
@@ -73,7 +116,10 @@ Isso significa que, conforme a quantidade de vértices aumenta, a quantidade de 
 
 | Tópico | Descrição |
 |---|---|
-| **Semigrau e incidentes** | Em um grafo orientado, um arco **incide exteriormente** em um vértice `x ∈ V` quando `x` é sua **extremidade inicial** (o arco **sai de x**). Um arco **incide interiormente** em `x` quando `x` é sua **extremidade final** (o arco **entra em x**). O conjunto dos arcos incidentes exteriormente em `x` é denotado por **ω⁺(x)** e sua cardinalidade é o **semigrau exterior**, denotado por **d⁺(x)**. Analogamente, o conjunto dos arcos incidentes interiormente em `x` é denotado por **ω⁻(x)** e sua cardinalidade é o **semigrau interior**, denotado por **d⁻(x)** (d é a quantidade enquanto ω é o conjunto) |
+| **Adjacência e Incidência** | Em grafos orientados/direcionados, as arestas são chamadas de **arcos**. **Adjacência** é uma relação entre **vértices**: dois vértices são adjacentes quando existe um arco ligando diretamente um ao outro. **Incidência** é uma relação entre um **arco e um vértice**: um arco é incidente a um vértice quando esse vértice constitui uma de suas extremidades. Assim, enquanto a adjacência parte da perspectiva dos **vértices** ("quais vértices estão diretamente ligados?"), a incidência parte da perspectiva do **arco** ("a quais vértices este arco está ligado?"). |]
+| **Semigrau** | Em um grafo orientado, um arco **incide exteriormente** em um vértice `x ∈ V` quando `x` é sua **extremidade inicial** (o arco **sai de x**). Um arco **incide interiormente** em `x` quando `x` é sua **extremidade final** (o arco **entra em x**). O conjunto dos arcos incidentes exteriormente em `x` é denotado por **ω⁺(x)** e sua cardinalidade é o **semigrau exterior**, denotado por **d⁺(x)**. Analogamente, o conjunto dos arcos incidentes interiormente em `x` é denotado por **ω⁻(x)** e sua cardinalidade é o **semigrau interior**, denotado por **d⁻(x)** (d é a quantidade enquanto ω é o conjunto) |
+| **Arestas incidentes** | Em grafo não orientado, dizemos apenas que uma aresta incide e que o conjunto de **arestas incidentes** são denotadas ω(x) mas em grafos orientados, dizemos que arestas incidentes são denotadas ω(x) = ω⁺(x) U ω⁻(x) |
+| **Grau** | Define-se grau de um vértice, denotado por d(x) como sendo o número de ligações que nele incidem. Em grafos orientados d(x) = d⁺(x) + d⁻(x) enquanto em grafos não orientados d(x) = \|ω(x)\| |
 
 ### Semigrau — para memorizar
 
@@ -91,6 +137,347 @@ Isso significa que, conforme a quantidade de vértices aumenta, a quantidade de 
 > **d = quantidade de arcos**  
 > **+ = sai**  
 > **− = entra**
+
+Seja um Grafo G = (V, A) sem laços:
+
+ - Valor |V| = n é chamado de **ordem do grafo**
+ - Valor |A| = m é chamado de **tamanho de um grafo**
+ - **Grafo Trivial** é um grafo onde m = 0 ou, no caso, um arco com vértices e nenhuma aresta
+ - Um vértice de grau nulo é um **vértice isolado**
+ - Um vértice de grau 1 é chamado de **pendente**
+
+## Simetria de Grafos
+
+| Tópico | Descrição |
+|---|---|
+| **Simétrico** | Um grafo G = (V, A) será **simétrico** se a relação associada a A for uma relação simétrica. Isso significa que, se `x → w` pertence a A, então `w → x` também pertence a A. |
+| **Antissimétrico** | Um grafo G = (V, A) será **antissimétrico** se a relação associada a A for uma relação antissimétrica. Isso significa que, para dois vértices distintos `x ≠ w`, se `x → w` pertence a A, então `w → x` **não pode** pertencer a A. |
+
+## Subgrafo e Grafo parcial
+
+| Tópico | Descrição |
+|---|---|
+| **Subgrafo** | Um **subgrafo** é uma subestrutura `H = (Y, W)` de um grafo `G = (V, A)` tal que `Y ⊆ V` e `W ⊆ A`, sendo que `W` contém apenas as ligações/arcos de `G` cujas extremidades pertencem aos vértices escolhidos em `Y`. Portanto, um subgrafo pode possuir **menos vértices e menos ligações/arcos** que o grafo original. |
+| **Grafo parcial** | Um **grafo parcial**, também chamado de **subgrafo gerador ou abrangente**, é um caso particular de subgrafo `F = (V, W)` no qual **todos os vértices do grafo original são mantidos** (`V_F = V_G`), mas apenas um subconjunto das ligações/arcos é mantido (`W ⊆ A`). Portanto, um grafo parcial pode **remover ligações/arcos, mas não pode remover vértices**. |
+
+### Subgrafo
+
+Para um grafo `G = (V, A)`, escolhemos um subconjunto de vértices:
+
+`Y ⊆ V`
+
+e mantemos apenas as ligações/arcos de `G` cujas extremidades pertencem a `Y`.
+
+- Para um grafo **não orientado**:
+
+  `W = A ∩ P₂(Y)`
+
+- Para um grafo **orientado**:
+
+  `W = A ∩ Y²`
+
+### Grafo parcial
+
+No grafo parcial, **todos os vértices são mantidos**:
+
+`F = (V, W)`
+
+com:
+
+`W ⊆ A`
+
+Assim, a diferença fundamental é:
+
+> **Subgrafo:** pode remover **vértices e ligações/arcos**.
+>
+> **Grafo parcial:** mantém **todos os vértices** e pode remover apenas **ligações/arcos**.
+
+O grafo original `G` de um subgrafo ou grafo parcial é chamado de **supergrafo**.
+
+### Macete
+
+- **Subgrafo:** `Y ⊆ V` → pode diminuir os vértices.
+- **Grafo parcial:** `V` permanece igual → só `W ⊆ A` pode diminuir.
+
+## Hipergrafo
+
+Um **hipergrafo** é uma generalização do conceito de grafo.
+
+Em um grafo tradicional, uma aresta conecta exatamente **dois vértices**:
+
+~~~text
+A ───── B
+~~~
+
+Podemos representar uma aresta como um par de vértices:
+
+`e = {A, B}`
+
+Já em um hipergrafo, uma **hiperaresta pode conectar dois ou mais vértices ao mesmo tempo**.
+
+Por exemplo:
+
+~~~text
+       A
+      / \
+     /   \
+    B─────C
+     \   /
+      \ /
+       D
+~~~
+
+Uma hiperaresta poderia ser:
+
+`e₁ = {A, B, C, D}`
+
+Ou seja, uma única hiperaresta relaciona **quatro vértices simultaneamente**.
+
+### Definição
+
+Um hipergrafo pode ser representado por:
+
+`H = (V, A)`
+
+onde:
+
+- `V` = conjunto de vértices;
+- `A` = conjunto de hiperarestas;
+- cada hiperaresta é um **subconjunto de `V`**.
+
+Assim:
+
+`A ⊆ P(V)`
+
+onde `P(V)` é o conjunto das partes de `V`, ou seja, o conjunto de todos os subconjuntos possíveis de `V`.
+
+### Exemplo
+
+Considere:
+
+`V = {A, B, C, D}`
+
+e:
+
+`A = {{A,B}, {A,B,C}, {B,C,D}}`
+
+Temos três hiperarestas:
+
+- `e₁ = {A,B}` → conecta 2 vértices;
+- `e₂ = {A,B,C}` → conecta 3 vértices;
+- `e₃ = {B,C,D}` → conecta 3 vértices.
+
+Perceba que uma hiperaresta **não precisa conectar apenas dois vértices**.
+
+> **Macete:**
+>
+> **Grafo:** uma aresta normalmente conecta `2` vértices.
+>
+> **Hipergrafo:** uma hiperaresta pode conectar `2, 3, 4, ...` vértices simultaneamente.
+
+---
+
+## Funções e Hipergrafos
+
+As funções **injetora, sobrejetora e bijetora** aparecem quando relacionamos elementos de dois conjuntos.
+
+Uma função pode ser representada como:
+
+`f : A → B`
+
+Isso significa que cada elemento de `A` é associado a **exatamente um** elemento de `B`.
+
+Em hipergrafos, essas propriedades podem ser utilizadas para descrever relações entre conjuntos, por exemplo, entre um conjunto de elementos e um conjunto de hiperarestas.
+
+### Função Injetora
+
+Uma função é **injetora** quando elementos diferentes do domínio nunca são associados ao mesmo elemento do contradomínio.
+
+Formalmente:
+
+`f(x₁) = f(x₂) ⟹ x₁ = x₂`
+
+Ou, equivalentemente:
+
+`x₁ ≠ x₂ ⟹ f(x₁) ≠ f(x₂)`
+
+Exemplo:
+
+~~~text
+A ──→ 1
+B ──→ 2
+C ──→ 3
+~~~
+
+Cada elemento possui uma imagem diferente.
+
+Portanto, a função é **injetora**.
+
+### Função Sobrejetora
+
+Uma função é **sobrejetora** quando **todo elemento do contradomínio é atingido por pelo menos um elemento do domínio**.
+
+Formalmente:
+
+`∀y ∈ B, ∃x ∈ A : f(x) = y`
+
+Exemplo:
+
+~~~text
+A ──→ 1
+B ──→ 2
+C ──→ 2
+D ──→ 3
+~~~
+
+Todos os elementos do contradomínio `{1,2,3}` foram atingidos.
+
+Portanto, a função é **sobrejetora**.
+
+Observe que dois elementos diferentes podem apontar para o mesmo elemento. Isso é permitido em uma função sobrejetora.
+
+### Função Bijetora
+
+Uma função é **bijetora** quando é simultaneamente:
+
+- **injetora**; e
+- **sobrejetora**.
+
+Portanto, cada elemento do domínio está associado a um elemento diferente do contradomínio e **todos os elementos do contradomínio são atingidos**.
+
+Exemplo:
+
+~~~text
+A ──→ 1
+B ──→ 2
+C ──→ 3
+~~~
+
+Cada elemento de `{A,B,C}` possui uma imagem diferente e todos os elementos de `{1,2,3}` foram atingidos.
+
+Logo, a função é **bijetora**.
+
+---
+
+## Relação com Hipergrafos
+
+Considere um hipergrafo:
+
+`H = (V,A)`
+
+com:
+
+`V = {v₁,v₂,v₃,v₄}`
+
+e:
+
+`A = {e₁,e₂,e₃}`
+
+onde:
+
+`e₁ = {v₁,v₂}`
+
+`e₂ = {v₂,v₃,v₄}`
+
+`e₃ = {v₁,v₄}`
+
+Podemos representar a relação de **incidência** entre vértices e hiperarestas:
+
+~~~text
+          Hiperarestas
+             e₁    e₂    e₃
+             │     │     │
+v₁ ──────────●─────┼─────●
+v₂ ──────────●─────●
+v₃ ──────────┼─────●
+v₄ ──────────┼─────●─────●
+~~~
+
+Aqui, um vértice pode estar associado a várias hiperarestas.
+
+Por exemplo:
+
+`v₂ ∈ e₁`
+
+e
+
+`v₂ ∈ e₂`
+
+Portanto, a relação entre **vértices e hiperarestas** não precisa ser uma função simples de `V` para `A`, porque um mesmo vértice pode pertencer a várias hiperarestas.
+
+### Onde entram injetora, sobrejetora e bijetora?
+
+Essas propriedades podem ser analisadas quando definimos uma **função específica** entre conjuntos relacionados ao hipergrafo.
+
+Por exemplo, suponha uma função:
+
+`f : V → A`
+
+que associa **cada vértice a uma hiperaresta**.
+
+Se:
+
+~~~text
+v₁ ──→ e₁
+v₂ ──→ e₂
+v₃ ──→ e₃
+~~~
+
+e cada vértice recebe uma hiperaresta diferente, temos uma função **injetora**.
+
+Se, além disso, **todas as hiperarestas** forem atingidas, ela também é **sobrejetora**.
+
+Nesse caso, se `|V| = |A|`, a função pode ser **bijetora**.
+
+> **Importante:** ser injetora, sobrejetora ou bijetora **não é uma característica obrigatória de um hipergrafo**. Essas propriedades pertencem às **funções que podemos definir entre conjuntos relacionados ao hipergrafo**.
+
+### Resumo
+
+| Conceito | Ideia principal |
+|---|---|
+| **Injetora** | Elementos diferentes do domínio possuem imagens diferentes. |
+| **Sobrejetora** | Todo elemento do contradomínio é atingido. |
+| **Bijetora** | É simultaneamente injetora e sobrejetora. |
+| **Hipergrafo** | Uma hiperaresta pode relacionar vários vértices simultaneamente. |
+
+**Macete para funções:**
+
+> **Injetora:** não repete a imagem.
+>
+> **Sobrejetora:** não deixa ninguém do contradomínio de fora.
+>
+> **Bijetora:** não repete e não deixa ninguém de fora.
+
+CONTINUAR A PARTIR DAQUI
+-------------------------
+
+## Categorias de Grafos
+
+| Tópico | Descrição |
+|---|---|
+| **Grafo Homogêneo** | Possui **um único tipo de vértice e um único tipo de aresta**. Todos os vértices representam o mesmo tipo de entidade e todas as arestas representam o mesmo tipo de relação. |
+| **Grafo Heterogêneo** | Possui **mais de um tipo de vértice e/ou de aresta**. Os diferentes tipos representam entidades ou relações semanticamente distintas. |
+| **Grafo Estático** | Grafo cuja estrutura é considerada **fixa em relação ao tempo**. Os vértices e as arestas não são considerados como mudando ao longo do período analisado. |
+| **Grafo Dinâmico** | Grafo cuja estrutura ou propriedades **mudam ao longo do tempo**. Vértices e arestas podem surgir ou desaparecer, e seus atributos, como pesos ou estados, também podem mudar. |
+
+### Exemplo de Grafo Homogêneo
+
+Uma **rede de amizades** em uma rede social:
+
+- Vértices = pessoas
+- Arestas = relações de amizade
+
+Todos os vértices representam o mesmo tipo de entidade (**pessoa**) e todas as arestas representam o mesmo tipo de relação (**amizade**).
+
+### Exemplo de Grafo Heterogêneo
+
+Uma **rede acadêmica**:
+
+- Vértices = `{Pesquisadores, Artigos, Instituições}`
+- Arestas = `{escreveu, afiliado a, citou}`
+
+Nesse caso, existem diferentes tipos de entidades e diferentes tipos de relações. Por exemplo, um pesquisador **escreve** um artigo, um pesquisador é **afiliado a** uma instituição e um artigo **cita** outro artigo.
+
 
 ## Análise de Grafos
 
