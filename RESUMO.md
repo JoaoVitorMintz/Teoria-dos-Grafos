@@ -1012,3 +1012,181 @@ $$d^k_{ij} = \min \left( d^{k-1}_{ij}, d^{k-1}_{ik} + d^{k-1}_{kj} \right)$$
 As modificações de valor são inscritas na própria matriz de valores vigente D(k-1), que se trasformará em D(k) ao final da iteração.
 
 Para registrar modificações, é utilizado matriz auxiliar que é a matriz de roteamento. Matriz R = [rij] que é uma matriz de índices, inicializada co rij = i; rij = j se vij < infinito; rij = 0 em caso contrário. Elementos da matriz são os rótulos dos vértices.
+
+## Algoritmos em Pseudocódigo:
+
+### Componentes f-conexas de um grafo orientado:
+
+```text
+Início FCNEX(s₀ | s₀ ∈ V);  // Dados G = (V, A)
+
+    v ← s₀;
+    R⁺(v) ← {v};
+    R⁻(v) ← {v};
+    W ← ∅;
+
+    // Monta o fecho transitivo direto de v
+    enquanto (N⁺[R⁺(v)] − R⁺(v) ≠ ∅) faça
+
+        W ← ∅;
+
+        para cada vértice u ∈ R⁺(v) faça
+            para cada vértice m ∈ V faça
+                se A[u][m] = 1 então
+                    W ← W ∪ {m};
+                fim-se
+            fim-para
+        fim-para
+
+        W ← W − R⁺(v);
+        R⁺(v) ← R⁺(v) ∪ W;
+
+    fim-enquanto
+
+    // Monta o fecho transitivo inverso de v
+    enquanto (N⁻[R⁻(v)] − R⁻(v) ≠ ∅) faça
+
+        W ← ∅;
+
+        para cada vértice u ∈ R⁻(v) faça
+            para cada vértice m ∈ V faça
+                se A[m][u] = 1 então
+                    W ← W ∪ {m};
+                fim-se
+            fim-para
+        fim-para
+
+        W ← W − R⁻(v);
+        R⁻(v) ← R⁻(v) ∪ W;
+
+    fim-enquanto
+
+    // Encontra a componente fortemente conexa
+    W ← R⁺(v) ∩ R⁻(v);
+
+    Visita(W);
+    V ← V − W;
+
+    Se V ≠ ∅ então
+        Escolhe sᵢ ∈ V;
+        FCNEX(sᵢ);
+    fim-se
+
+Fim.
+```
+
+### Busca em Largura (BFS):
+
+```text
+Início BFS(n);  // n é o vértice inicial
+
+    Visita(n);
+    Marca(n);
+    Enfileira(n, F);
+
+    enquanto F ≠ ∅ faça
+
+        n ← Desenfileira(F);
+
+        para cada vértice m ∈ V faça
+
+            se A[n][m] = 1 e m não está marcado então
+
+                Visita(m);
+                Marca(m);
+                Enfileira(m, F);
+
+            fim-se
+
+        fim-para
+
+    fim-enquanto
+
+Fim.
+```
+
+### Busca em Profundidade (DFS):
+
+```text
+Início DFS(n);  // n é o vértice inicial
+
+    Visita(n);
+    Marca(n);
+    Empilha(n, P);
+
+    enquanto P ≠ ∅ faça
+
+        n ← Desempilha(P);
+
+        para cada vértice m ∈ V faça
+
+            se A[n][m] = 1 e m não está marcado então
+
+                Visita(m);
+                Marca(m);
+                Empilha(m, P);
+
+            fim-se
+
+        fim-para
+
+    fim-enquanto
+
+Fim.
+```
+
+### Ordenação Topológica:
+
+```text
+Início ORDENACAO_TOPOLOGICA(G = (V, A));
+
+    // G é um grafo direcionado e acíclico (GDA)
+
+    // Inicializa os graus de entrada
+    para cada vértice v ∈ V faça
+
+        GE[v] ← 0;
+
+        para cada vértice u ∈ V faça
+            GE[v] ← GE[v] + A[u][v];
+        fim-para
+
+    fim-para
+
+    // Insere na fila os vértices com grau de entrada 0
+    F ← ∅;
+
+    para cada vértice v ∈ V faça
+        se GE[v] = 0 então
+            Enfileira(v, F);
+            GE[v] ← -1;
+        fim-se
+    fim-para
+
+    // Processa os vértices
+    enquanto F ≠ ∅ faça
+
+        n ← Desenfileira(F);
+
+        Visita(n);
+
+        // Atualiza os graus de entrada dos vértices adjacentes
+        para cada vértice m ∈ V faça
+
+            se A[n][m] = 1 então
+
+                GE[m] ← GE[m] - 1;
+
+                se GE[m] = 0 então
+                    Enfileira(m, F);
+                    GE[m] ← -1;
+                fim-se
+
+            fim-se
+
+        fim-para
+
+    fim-enquanto
+
+Fim.
+```
