@@ -1,4 +1,4 @@
-# Resumo da Matéria — Teoria dos Grafos - Parei no slide 44 da aula 2
+# Resumo da Matéria — Teoria dos Grafos
 
 A **Teoria dos Grafos** é uma área da matemática que estuda as relações entre entidades (objetos) que possuem características ou relações relevantes entre si.
 
@@ -104,13 +104,98 @@ Isso significa que, conforme a quantidade de vértices aumenta, a quantidade de 
 
 **Importante**: Para Matriz de Incidência em **grafo direcionado ponderado**, troca-se **0** por **∞** e **1/-1** por **p/-p**, sendo **p** o peso dado. Proporcional para a Matriz de incidência em **grafo não-direcionado ponderado**.
 
-## Conceitos iniciais de Grafos:
+## Conceitos iniciais de Grafos
 
 | Tópico | Descrição |
 |---|---|
-| **Grafo Completo** | É completo se existir uma ligação entre **cada par de vértices distintos** (sem considerar laços). Todas as estruturas desse tipo com a mesma ordem são isomorfas. Grafos completos não-orientados são conhecidos como **cliques** e recebem a notação **Kₙ**. |
-| **Conjunto das Partes** | É o conjunto formado por **todos os subconjuntos** de um conjunto X, denotado por **P(X) ou 2ˣ**. Exemplo: X = {x₁, x₂, x₃, x₄}. Então P(X) contém todos os subconjuntos de X, desde o conjunto vazio até {x₁, x₂, x₃, x₄}. Se X possui n elementos, então P(X) possui **2ⁿ subconjuntos**. Os subconjuntos que possuem exatamente k elementos podem ser contados por **Combinação: C(n,k) = n! / (k!(n-k)!)**. |
-| **Potência Cartesiana** | **Xᵏ** é o conjunto de todas as **k-uplas ordenadas** formadas pelos elementos de X, permitindo repetição. Exemplo: se X = {x₁, x₂, x₃, x₄}, então X² = {(x₁,x₁), (x₁,x₂), (x₁,x₃), (x₁,x₄), (x₂,x₁), ..., (x₄,x₄)}. Como a ordem importa, **(x₁,x₂) ≠ (x₂,x₁)**. Se X possui n elementos, então **|Xᵏ| = nᵏ**. |
+| **Grafo Completo** | É completo se existir uma ligação entre **cada par de vértices distintos**, sem considerar laços. Todas as estruturas desse tipo com a mesma ordem são isomorfas. Grafos completos não orientados são conhecidos como **cliques** e recebem a notação **Kₙ**. |
+| **Conjunto das Partes** | É o conjunto formado por **todos os subconjuntos** de um conjunto `X`, denotado por **P(X)** ou **2ⁿ**. Por exemplo, se `X = {a, b, c}`, então `P(X) = {∅, {a}, {b}, {c}, {a,b}, {a,c}, {b,c}, {a,b,c}}`. |
+| **Potência Cartesiana** | **Xᵏ** é o conjunto de todas as **k-uplas ordenadas** formadas pelos elementos de `X`, permitindo repetição. Por exemplo, `X²` contém todos os pares ordenados possíveis. Como a ordem importa, `(a,b) ≠ (b,a)`. |
+
+### Fórmulas de contagem
+
+#### 1. Conjunto das partes — `2ⁿ`
+
+Calcula a **quantidade total de subconjuntos** que podem ser formados a partir de um conjunto com `n` elementos.
+
+- **Quando usar:** quando queremos saber quantos subconjuntos diferentes podem ser formados, independentemente da quantidade de elementos em cada subconjunto.
+- **Exemplo:** se `X = {a, b, c}`, então `|P(X)| = 2³ = 8`.
+
+**Ideia para lembrar:** cada elemento tem duas possibilidades: estar ou não estar no subconjunto.
+
+#### 2. Combinação — `C(n,k) = n! / (k!(n-k)!)`
+
+Calcula a quantidade de maneiras de **escolher exatamente `k` elementos** de um conjunto com `n` elementos, sem considerar a ordem.
+
+- **Quando usar:** quando queremos contar subconjuntos com exatamente `k` elementos.
+- **Exemplo:** se `X = {a, b, c}` e queremos escolher dois elementos, temos `C(3,2) = 3` possibilidades: `{a,b}`, `{a,c}` e `{b,c}`.
+
+**Ideia para lembrar:** a ordem não importa. Escolher `a` e depois `b` é a mesma coisa que escolher `b` e depois `a`.
+
+**Aplicação em grafos:** calcular a quantidade de arestas possíveis em um grafo completo não orientado, sem laços.
+
+`C(n,2) = n(n-1)/2`
+
+Por exemplo, um grafo completo não orientado com 3 vértices possui `C(3,2) = 3` arestas possíveis.
+
+#### 3. Potência cartesiana — `|Xᵏ| = nᵏ`
+
+Calcula a quantidade de **k-uplas ordenadas** que podem ser formadas com os elementos de um conjunto de `n` elementos, permitindo repetição.
+
+- **Quando usar:** quando queremos contar todos os pares ou sequências ordenadas possíveis, permitindo que um elemento apareça mais de uma vez.
+- **Exemplo:** se `X = {a, b, c}`, então `|X²| = 3² = 9` pares ordenados.
+
+**Ideia para lembrar:** a ordem importa e a repetição é permitida.
+
+**Aplicação em grafos:** representar todos os arcos possíveis de um grafo orientado, incluindo laços.
+
+`|X²| = n²`
+
+Por exemplo, com 3 vértices, temos `3² = 9` pares ordenados possíveis, incluindo `(a,a)`, `(b,b)` e `(c,c)`.
+
+#### 4. Arranjo — `A(n,k) = n! / (n-k)!`
+
+Calcula a quantidade de maneiras de **selecionar e ordenar `k` elementos distintos** de um conjunto com `n` elementos, sem repetição.
+
+- **Quando usar:** quando queremos contar sequências ordenadas de elementos distintos.
+- **Exemplo:** se `X = {a, b, c}` e queremos formar pares ordenados sem repetição, temos `A(3,2) = 6` possibilidades: `(a,b)`, `(a,c)`, `(b,a)`, `(b,c)`, `(c,a)` e `(c,b)`.
+
+**Ideia para lembrar:** a ordem importa, mas não podemos repetir elementos.
+
+**Aplicação em grafos:** calcular a quantidade de arcos possíveis em um grafo orientado simples, sem laços.
+
+`A(n,2) = n(n-1)`
+
+Por exemplo, com 3 vértices, temos `A(3,2) = 6` arcos possíveis.
+
+### Comparação das fórmulas
+
+| Fórmula | O que calcula? | A ordem importa? | Permite repetição? |
+|---|---|---|---|
+| **`2ⁿ`** | Todos os subconjuntos de um conjunto. | Não | Não se aplica |
+| **`C(n,k)`** | Subconjuntos com exatamente `k` elementos. | Não | Não |
+| **`nᵏ`** | Todas as k-uplas ordenadas. | Sim | Sim |
+| **`A(n,k)`** | Todas as sequências ordenadas de `k` elementos distintos. | Sim | Não |
+
+### Resumo para Teoria dos Grafos
+
+Considerando um conjunto de 3 vértices `V = {a, b, c}`:
+
+| Operação | Resultado | Interpretação |
+|---|---:|---|
+| **`2³`** | 8 | Quantidade de subconjuntos de vértices. |
+| **`C(3,2)`** | 3 | Quantidade de pares de vértices distintos sem considerar a ordem. Pode ser usada para contar as arestas de um grafo completo não orientado. |
+| **`3²`** | 9 | Quantidade de pares ordenados, incluindo laços. Pode representar todos os arcos possíveis de um grafo orientado com laços permitidos. |
+| **`A(3,2)`** | 6 | Quantidade de pares ordenados sem repetição. Pode representar todos os arcos possíveis de um grafo orientado simples, sem laços. |
+
+### Macete para lembrar
+
+- **Conjunto das partes (`2ⁿ`):** quero todos os subconjuntos possíveis.
+- **Combinação (`C(n,k)`):** quero escolher exatamente `k` elementos, sem me importar com a ordem.
+- **Potência cartesiana (`nᵏ`):** quero todas as sequências ordenadas possíveis, permitindo repetição.
+- **Arranjo (`A(n,k)`):** quero todas as sequências ordenadas possíveis, sem repetição.
+
+**Atenção:** a combinação e o arranjo podem ser usados para contar ligações em grafos, mas a escolha depende de a ordem importar. Em grafos não orientados, a ligação entre dois vértices não tem direção; em grafos orientados, a direção distingue os arcos.
 
 ## Ligações adjacentes, incidentes e semigrau:
 
@@ -448,8 +533,62 @@ Nesse caso, se `|V| = |A|`, a função pode ser **bijetora**.
 >
 > **Bijetora:** não repete e não deixa ninguém de fora.
 
-CONTINUAR A PARTIR DAQUI
--------------------------
+## Grafos Iguais e Isomorfos
+
+### Grafos Iguais
+
+Dois grafos `G₁ = (V₁, A₁)` e `G₂ = (V₂, A₂)` são **iguais** quando possuem exatamente os mesmos vértices e as mesmas arestas/arcos:
+
+`V₁ = V₂` e `A₁ = A₂`
+
+Ou seja, para serem iguais, os dois grafos precisam ter os **mesmos elementos**, não apenas a mesma estrutura.
+
+### Grafos Isomorfos
+
+Dois grafos são **isomorfos** quando podem possuir vértices e arestas diferentes, mas possuem **a mesma estrutura de conexões**.
+
+Para isso, deve existir uma **bijeção** `f` entre os vértices dos dois grafos que preserve as relações de adjacência.
+
+Em outras palavras:
+
+> Se dois vértices são adjacentes em `G₁`, seus vértices correspondentes também devem ser adjacentes em `G₂`, e vice-versa.
+
+Por exemplo:
+
+~~~text
+G₁:          G₂:
+
+A ─── B      1 ─── 2
+│     │      │     │
+C ─── D      3 ─── 4
+~~~
+
+Podemos estabelecer a correspondência:
+
+`f(A) = 1`
+
+`f(B) = 2`
+
+`f(C) = 3`
+
+`f(D) = 4`
+
+As letras e números são diferentes, portanto os grafos **não são iguais**.
+
+Porém, as conexões são preservadas:
+
+- `A` é adjacente a `B` → `1` é adjacente a `2`
+- `A` é adjacente a `C` → `1` é adjacente a `3`
+- `B` é adjacente a `D` → `2` é adjacente a `4`
+- `C` é adjacente a `D` → `3` é adjacente a `4`
+
+Portanto, `G₁` e `G₂` são **isomorfos**.
+
+**Macete:**
+
+> **Igual = mesmos elementos + mesma estrutura.**
+>
+> **Isomorfo = elementos podem mudar, mas a estrutura permanece.**
 
 ## Categorias de Grafos
 
@@ -478,69 +617,362 @@ Uma **rede acadêmica**:
 
 Nesse caso, existem diferentes tipos de entidades e diferentes tipos de relações. Por exemplo, um pesquisador **escreve** um artigo, um pesquisador é **afiliado a** uma instituição e um artigo **cita** outro artigo.
 
-
-## Análise de Grafos
+## Percurso e Caminho
 
 | Tópico | Descrição |
 |---|---|
-| **Caminho** | É uma cadeia de um grafo orientado o qual a orientação dos arcos é sempre a mesma a partir do vértice inicial e consegue alcançar até o vértice final. No caso não orientado, percurso = caminho. |
-| **Percurso/Cadeia** | É uma sequência de ligações sucessivamente adjacentes, onde cada ligação possui uma extremidade adjacente à ligação anterior e outra extremidade adjacente à ligação subsequente. |
+| **Caminho** | É uma sequência de vértices e arcos em um **grafo orientado**, na qual todos os arcos são percorridos respeitando sua orientação, desde um vértice inicial até um vértice final. |
+| **Percurso/Cadeia** | É uma sequência de ligações sucessivamente adjacentes, na qual cada ligação possui uma extremidade em comum com a ligação anterior e outra extremidade em comum com a ligação seguinte. Basicamente, o caminho que não se importa com a orientação do grafo |
+
+### Tipos de Percurso
+
+- **Percurso simples** → não repete **ligações/arestas**.
+- **Percurso elementar** → não repete **vértices**, com exceção possível do vértice inicial e final quando o percurso é fechado.
+- **Percurso fechado** → começa e termina no **mesmo vértice**.
+- **Ciclo** → percurso **fechado** que não repete vértices, exceto o primeiro, que coincide com o último.
+- **Corda** → é uma aresta que liga dois vértices **não consecutivos** de um ciclo.
+- **Cintura g(G)** de um grafo é o seu comprimento de **menor ciclo**.
+- **Circunferência c(G)** de um grafo é o comprimento do **maior ciclo**.
+
+### Percurso Simples
+
+Um percurso é **simples** quando nenhuma ligação é utilizada mais de uma vez.
+
+Exemplo:
+
+~~~text
+A ── B ── C ── D ── B
+~~~
+
+As ligações percorridas são:
+
+`AB, BC, CD, DB`
+
+Nenhuma ligação foi repetida, portanto o percurso é **simples**.
+
+Porém, o vértice `B` foi visitado duas vezes. Portanto, esse percurso **não é elementar**.
+
+### Percurso Elementar
+
+Um percurso é **elementar** quando nenhum vértice é repetido.
+
+Exemplo:
+
+~~~text
+A ── B ── C ── D
+~~~
+
+O percurso:
+
+`A → B → C → D`
+
+visita cada vértice apenas uma vez. Portanto, é **elementar**.
+
+A principal ideia é:
+
+> **Simples → não repete ligações.**
+>
+> **Elementar → não repete vértices.**
+
+### Percurso Fechado
+
+Um percurso é **fechado** quando o vértice inicial é igual ao vértice final.
+
+Exemplo:
+
+~~~text
+A ── B
+│    │
+D ── C
+~~~
+
+O percurso:
+
+`A → B → C → D → A`
+
+é **fechado**, pois começa em `A` e termina em `A`.
+
+Um percurso fechado pode ou não ser simples e elementar.
+
+### Ciclo
+
+Um **ciclo** é um percurso **simples e fechado**.
+
+Exemplo:
+
+~~~text
+A ── B
+│    │
+D ── C
+~~~
+
+`A → B → C → D → A`
+
+- começa e termina em `A` → é fechado;
+- nenhuma aresta é repetida → é simples.
+
+Portanto, é um **ciclo**.
+
+### Corda
+
+Uma **corda** é uma aresta que conecta dois vértices **não consecutivos** de um ciclo.
+
+Exemplo:
+
+~~~text
+A ─── B
+│ ╲   │
+│  ╲  │
+D ─── C
+~~~
+
+Considere o ciclo:
+
+`A → B → C → D → A`
+
+Nesse ciclo, `A` e `C` **não são consecutivos**.
+
+A aresta:
+
+`A ─ C`
+
+é uma **corda**, pois conecta dois vértices do ciclo que não estavam diretamente ligados pelo ciclo.
+
+> **Macete:**
+>
+> **Simples** → não repete **arestas**.
+>
+> **Elementar** → não repete **vértices**.
+>
+> **Fechado** → começa e termina no **mesmo vértice**.
+>
+> **Ciclo** → simples + fechado.
+>
+> **Corda** → ligação entre dois vértices **não consecutivos** de um ciclo.
+
+### Tipos de caminho
+ - **Circuito** é um caminho simples e fechado em um grafo orientado.
+
+## Conjunto de sucessores, antecessores e vizinhos
+
+| Tópico | Descrição |
+|---|---|
+| **Sucessor e Antecessor** | Em um grafo **G = (V, A)**, diz-se que `y ∈ V` é **sucessor** de `x ∈ V` quando existe `(x, y) ∈ A`. Nesse caso, `x` é **antecessor** de `y`. |
+| **Conjunto de Sucessores** | O conjunto de sucessores de um vértice `x` é denotado por **N⁺(x)** e corresponde ao conjunto de vértices indicados pelas posições não nulas da **linha** associada a `x` na matriz de adjacência. Basicamente, são todos os vértices que possuem uma seta que **sai de `x` e entra neles**. |
+| **Conjunto de Antecessores** | O conjunto de antecessores de um vértice `x` é denotado por **N⁻(x)** e corresponde ao conjunto de vértices indicados pelas posições não nulas da **coluna** associada a `x` na matriz de adjacência. Basicamente, são todos os vértices que possuem uma seta que **sai deles e entra em `x`**. |
+| **Vizinho** | Também conhecido como **vértice adjacente**, é todo vértice que participa de uma ligação com `x`, independentemente da orientação da ligação, em um grafo orientado ou não orientado. |
+| **Conjunto dos Vizinhos** | O conjunto dos vizinhos de um vértice `x ∈ V` é denotado por **N(x)** e corresponde ao conjunto de todos os vértices vizinhos de `x`. |
+
+## Fecho transitivo direto e indireto, descendente e ascendente
+
+Dizemos que um vértice `y` é **atingível** a partir de um vértice `v` em um grafo `G` quando existe em `G` uma sequência de sucessores que começa em `v` e termina em `y`.
+
+| Tópico | Descrição |
+|---|---|
+| **Fecho transitivo direto** | Simbolizado por **R⁺(v)**, de um vértice em um grafo orientado `G = (V, A)`, é o conjunto de vértices de `G` **atingíveis a partir de `v`, incluindo `v`**. |
+| **Fecho transitivo inverso** | Simbolizado por **R⁻(v)**, de um vértice em um grafo orientado `G = (V, A)`, é o conjunto de vértices de `G` **a partir dos quais `v` é atingível, incluindo `v`**. |
+
+Se `y ∈ R⁺(v)`, então `y` é **descendente** de `v`.  
+Se `y ∈ R⁻(v)`, então `y` é **ascendente** de `v`.
+
+## Diferença de semigrau e fecho transitivo direto e inverso
+
+A principal diferença está na **perspectiva utilizada**:
+
+- **Semigrau** → considera os **arcos** que estão diretamente ligados a um vértice.
+- **N⁺(x) / N⁻(x)** → considera os **vértices diretamente sucessores ou antecessores** de `x`.
+- **R⁺(x) / R⁻(x)** → considera os **vértices atingíveis direta ou indiretamente** a partir de `x` ou que conseguem chegar até `x`.
+
+Considere o grafo:
+
+```text
+x → w → z
+```
+
+Logo, nesse exemplo, podemos dizer que ω⁺(x) = {(x, w)} enquanto N⁺(x) = {w} e R+(x) = {x, w, z}
 
 ## Conexidade - Grafos
 
 | Tópico | Descrição |
 |---|---|
-| **Conexidade** | possibilidade de passagem de um vértice a outra em um grafo através das ligações existentes, traduzindo o **estado de ligação** e adquirindo aspectos diferentes conforme o grafo sendo **orientado ou não**, voltado para atingibilidade especialmente em **grafos orientados**. Nos grafos não orientados as noções de atingibilidade (relacionada a pares de vértices) e de conexidade (relacionado a grafos como um todo) são correspondentes. |
+| **Conexidade** | É a possibilidade de passagem de um vértice a outro em um grafo através das ligações existentes, representando o **estado de ligação** do grafo. Suas características variam conforme o grafo seja **orientado ou não orientado**, estando especialmente relacionada à atingibilidade em grafos orientados. Nos grafos não orientados, as noções de atingibilidade (relacionada a pares de vértices) e de conexidade (relacionada ao grafo como um todo) são correspondentes. |
 
-Um **grafo não-direcionado G = (V, E)** é **conexo** se existe um caminho G entre todo o part de vértices de V.
+Um **grafo não direcionado `G = (V, E)`** é **conexo** se existe um **caminho** entre todo par de vértices de `V`.
 
-Um **grafo direcionado G = (V, E)**, são definidos quatro tipos de conexidade: **desconexo**, simplesmente conexo (**s-conexo**), semi-fortemente conexo (**sf-conexo**) e fortemente conexo (**f-conexo**).
+Um **grafo direcionado `G = (V, A)`** possui quatro classificações de conexidade: **desconexo**, **simplesmente conexo (s-conexo)**, **semi-fortemente conexo (sf-conexo)** e **fortemente conexo (f-conexo)**.
 
-Um **grafo direcionado G = (V, A)** é **desconexo** se nele existir ao menos um part de vértices não unidos por uma cadeia.
+Um **grafo direcionado `G = (V, A)`** é **desconexo** se existir ao menos um par de vértices que não é unido por uma **cadeia**.
 
-Um **grafo direcionado G = (V, A)** é **simplesmente conexo (s-conexo)** no qual todo par de vértices é unido por ao menos uma cadeia.
+Um **grafo direcionado `G = (V, A)`** é **simplesmente conexo (s-conexo)** quando todo par de vértices é unido por ao menos uma **cadeia**.
 
-Um **grafo direcionado G = (V, A)** é **semi-fortemente conexo (sf-conexo)** quando, em todo o part de vértices ao menos um deles é atingível a partir do outro (logo, entre eles, existe em ao menos um dos dois sentidos possíveis)
+Um **grafo direcionado `G = (V, A)`** é **semi-fortemente conexo (sf-conexo)** quando, para todo par de vértices, pelo menos um deles é **atingível a partir do outro**. Portanto, entre os dois vértices, existe um caminho orientado em **pelo menos um dos dois sentidos possíveis**.
 
-Um **grafo direcionado G = (V, A)** é **fortemente conexo (f-conexo)** é sempre também sf-conexo e s-conexo, e que tdo grafo sf-conexo é s conexo. Para evitar dúvidas, utiliza-se classificação em **categorias de conexidade**.
+Um **grafo direcionado `G = (V, A)`** é **fortemente conexo (f-conexo)** quando, para todo par de vértices, **um é atingível a partir do outro e vice-versa**. Todo grafo fortemente conexo também é semi-fortemente conexo e simplesmente conexo, e todo grafo semi-fortemente conexo é simplesmente conexo.
 
-Diz-se então que um grafo orientado pertence a categoria:
- - C3, se é f-conexo
- - C2, se é sf-conexo e não é f-conexo
- - C1, se é s-conexo e não é sf-conexo
- - C0, se é desconexo
+### Exemplo das cidades
 
-Em um grafo f-conexo G - (V, A):
- - Todo vértice é atingível de si mesmo: relação reflexiva
- - Se x é atingível de y, então y é atingível de x: relação simétrica
- - Se z é atingível de y e y é atingível de x, então z é atingível de x: relação transitiva.
+Imagine três cidades:
 
-A atingibilidade é uma relação reflexiva, simétrica e transitiva dizemos então que é uma **relação de equivalência**
+**A, B e C**
 
-### Grafo direcionado - Componentes f-conexas
+e estradas direcionadas entre elas.
 
-Sobre o conjunto de vértices de um grafo orientado qualquer G = (V, A) definimos uma **partição S**:
+A diferença entre os tipos de conexidade pode ser entendida pensando na possibilidade de **ir de uma cidade para outra**.
 
-Sejam os subgrafos correspondentes aos $$\mid S_i$$ como sendo partição contendo componentes f-conexas.
+#### Simplesmente conexo
 
-$$
-S = \left\{ S_i \mid S_i \subset V,\; S_i \cap S_j = \varnothing,\; i,j=1,\ldots,r,\; i\neq j \right\}
-$$
+No **simplesmente conexo**, considera-se a **cadeia**, portanto a orientação das ligações é ignorada.
 
-Sendo este, do conjuento de vértices **V**.
+Assim, se existir uma ligação entre duas cidades, mesmo que a estrada tenha apenas uma direção, podemos considerar que existe uma conexão entre elas para fins de conexidade simples.
 
-Defini-se **grafo reduzido** um Grafo G = (V, A), obtido de um grafo G (orientado ou não) através de uma sequência de contrações de vértices, feitas segundo um critério pré-definido.
+Por exemplo:
 
-Podemos reduzir um grafo orientado G por meio de suas componentes f-conexas.
+**A → B**
 
-Um grafo orientado G = (V,A) originará um grafo reduzido Gr = (S, W), onde S é a partição de Gr, em componentes f-conexas e W sendo:
+Mesmo que a estrada permita apenas ir de `A` para `B`, existe uma ligação entre as cidades. Como estamos considerando uma **cadeia**, podemos tratar essa ligação nos dois sentidos para verificar a conexidade.
 
-$$
-W = \left\{ (S_i, S_j) \mid \exists (x,y),\; x \in S_i,\; y \in S_j \right\}
-$$
+Portanto, a ideia é:
 
-Sendo W um conjunto dos arcos que unem essas componentes.
+> **Simplesmente conexo → consegue relacionar as cidades ignorando a orientação das estradas.**
 
+#### Semi-fortemente conexo
+
+No **semi-fortemente conexo**, a orientação passa a ser considerada, pois estamos trabalhando com **caminhos**.
+
+Por exemplo:
+
+**A → B**
+
+É possível **ir de A para B**, mas não necessariamente é possível **voltar de B para A**.
+
+Ainda assim, o par `A` e `B` satisfaz a condição de conexidade semi-forte, pois **um dos vértices é atingível a partir do outro**.
+
+Portanto:
+
+> **Semi-fortemente conexo → para cada par de cidades, é possível ir de uma para a outra em pelo menos um dos sentidos.**
+
+#### Fortemente conexo
+
+No **fortemente conexo**, também consideramos a orientação e os **caminhos**.
+
+Para duas cidades `A` e `B`, deve ser possível:
+
+**A → B**
+
+e também:
+
+**B → A**
+
+Ou seja, é possível **ir e voltar**, embora o caminho utilizado para voltar não precise ser o mesmo utilizado para ir.
+
+Por exemplo:
+
+**A → B → C**
+
+e
+
+**C → A**
+
+Nesse caso, é possível chegar de `A` até `C` e também de `C` até `A`.
+
+Portanto:
+
+> **Fortemente conexo → para todo par de cidades, é possível ir de uma até a outra e também voltar, sempre respeitando a orientação das estradas.**
+
+### Resumo pelo exemplo das cidades
+
+| Tipo | Ideia |
+|---|---|
+| **Desconexo** | Existem cidades que não possuem ligação entre si. |
+| **Simplesmente conexo** | É possível relacionar todas as cidades **ignorando a direção** das estradas, utilizando cadeias. |
+| **Semi-fortemente conexo** | Para cada par de cidades, é possível **ir em pelo menos um dos sentidos**, respeitando a direção das estradas. |
+| **Fortemente conexo** | Para cada par de cidades, é possível **ir e voltar**, respeitando a direção das estradas. |
+
+**Macete:**
+
+> **Simplesmente → cadeia → ignora a direção.**
+>
+> **Semi-fortemente → caminho → consegue ir em pelo menos um sentido.**
+>
+> **Fortemente → caminho → consegue ir e voltar.**
+
+### Categorias de conexidade
+
+Um grafo orientado pertence a uma das seguintes categorias:
+
+| Categoria | Condição |
+|---|---|
+| **C3** | É **f-conexo**. |
+| **C2** | É **sf-conexo**, mas **não é f-conexo**. |
+| **C1** | É **s-conexo**, mas **não é sf-conexo**. |
+| **C0** | É **desconexo**. |
+
+Portanto, as categorias formam uma classificação hierárquica
+
+### Relação de equivalência em grafos f-conexos
+
+Em um grafo **f-conexo** `G = (V, A)`, a relação de atingibilidade possui três propriedades:
+
+- **Reflexiva:** todo vértice é atingível de si mesmo.
+- **Simétrica:** se `x` é atingível de `y`, então `y` é atingível de `x`.
+- **Transitiva:** se `z` é atingível de `y` e `y` é atingível de `x`, então `z` é atingível de `x`.
+
+Como a atingibilidade é **reflexiva, simétrica e transitiva**, dizemos que ela é uma **relação de equivalência**.
+
+### Componentes f-conexas
+
+As **componentes f-conexas** são grupos de vértices nos quais **todos conseguem chegar uns aos outros**, respeitando a direção dos arcos.
+
+Por exemplo, considere o grafo com:
+
+- `A → B`
+- `B → C`
+- `B → D`
+- `C → A`
+
+Podemos perceber que `A`, `B` e `C` conseguem chegar uns aos outros:
+
+- `A → B → C`
+- `C → A → B`
+- `B → C → A`
+
+Portanto, eles formam uma componente f-conexa:
+
+**S₁ = {A, B, C}**
+
+Já o vértice `D` não consegue voltar para `A`, `B` ou `C`. Assim, ele forma outra componente:
+
+**S₂ = {D}**
+
+Portanto, as componentes f-conexas desse grafo são:
+
+**S = {S₁, S₂}**
+
+onde:
+
+- **S₁ = {A, B, C}**
+- **S₂ = {D}**
+
+### Grafo reduzido
+
+Depois de encontrar as componentes f-conexas, podemos **transformar cada componente em um único vértice**. Esse novo grafo é chamado de **grafo reduzido**.
+
+No exemplo:
+
+**S₁ = {A, B, C}**
+
+**S₂ = {D}**
+
+Como existe o arco `B → D` no grafo original, e `B` pertence a `S₁` enquanto `D` pertence a `S₂`, no grafo reduzido teremos:
+
+**S₁ → S₂**
+
+Portanto:
+
+- **Componentes f-conexas:** `S₁ = {A, B, C}` e `S₂ = {D}`
+- **Grafo reduzido:** `S₁ → S₂`
+
+A ideia é simplesmente **"juntar" em um único vértice todos os vértices que pertencem à mesma componente f-conexa** e manter as ligações existentes entre as componentes.
 ## Grau
 
 ### Grau de Entrada
