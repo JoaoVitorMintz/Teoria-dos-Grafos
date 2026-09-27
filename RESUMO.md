@@ -993,7 +993,106 @@ Nesta ordenação, pega-se os vértices que não possuem dependência (d-() = 0\
 
 ## Caminho Mínimo
 
-### Algoritmo de Djikstra
+Tipos básicos de problemas de caminho mínimo:
+ - Os que envolvem a determinação de caminhos a partir de um vértice (Dijkstra e Bellman-Ford)
+ - Exigem determinação dos caminhos unindo todos os pares de vértices (Floyd)
+
+Sempre é possível aplicar o primeiro n vezes para resolver o segundo problema. Por definição, somente existirão caminhos entre todos os pares de vértice se o grafo direcionado for categoria C3 (f-conexo) ou conexo, caso não orientado.
+
+Trabalha-se com conjuntos de vértices, separados por duas listas:
+ - **F (Fechado)**, contendo vértices para os quais já se conhece um caminho mínimo.
+ - **A (Aberto)**, contendo os vértices para os quais ainda não se conhece um caminho mínimo.
+
+A cada iteração, um vértice será transferido de **A** para **F**.
+
+### Algoritmo de Dijkstra
+
+O **Algoritmo de Dijkstra** é utilizado em grafos ponderados para resolver o problema de caminho mais curto de uma fonte única até os demais vértices.
+
+#### 1. Passo de Atualização (Relaxamento das Distâncias)
+
+Na $k$-ésima iteração, após a inserção de um vértice $r$ no conjunto de vértices com caminhos já determinados, atualizam-se as estimativas das menores distâncias para os vértices vizinhos. 
+
+A comparação e atualização da distância do vértice inicial $1$ até um vértice $i$ é dada por:
+
+$$d^k_{1i} = \min \left[ d^{k-1}_{1i}, (d_{1r} + v_{ri}) \right], \quad \forall \, i \in S, \quad S = A \cap N^+(r)$$
+
+##### Explicação dos termos:
+* **$d^k_{1i}$**: Estimativa da menor distância da origem (vértice $1$) até o vértice $i$ na iteração $k$.
+* **$d^{k-1}_{1i}$**: Menor distância do vértice $1$ até $i$ conhecida na iteração anterior ($k-1$).
+* **$d_{1r}$**: Distância mínima calculada do vértice $1$ até o vértice de referência $r$.
+* **$v_{ri}$**: Peso (ou comprimento) da aresta direcionada que vai de $r$ até $i$.
+* **$S = A \cap N^+(r)$**: Conjunto dos vértices adjacentes de saída de $r$ ($N^+(r)$) que pertencem ao conjunto $A$ de vértices ainda não finalizados.
+* **$S$** é atualizado a cada iteração.
+
+> **Lógica**: A distância até $i$ será o mínimo entre a menor distância já registrada até $i$ e a nova distância obtida ao passar pelo vértice $r$ recém-adicionado ($d_{1r} + v_{ri}$).
+
+#### 2. Escolha do Vértice Base ($r$)
+
+O vértice $r$ selecionado como base na iteração $k$ é aquele que possui a menor distância estimada dentre os vértices elegíveis do conjunto $S$ obtido na iteração anterior ($S^{k-1}$):
+
+$$d^k_{1r} = \min \left[ d^{k-1}_{1i} \right], \quad i \in S^{k-1}$$
+
+##### Explicação:
+* Na iteração anterior ($k-1$), analisa-se o conjunto $S^{k-1}$ e seleciona-se o vértice $i$ que possui o **menor valor de distância estimada** $d^{k-1}_{1i}$.
+* Este vértice com distância mínima é fixado como o novo vértice $r$ da iteração $k$.
+
+### Mapeamento e Exemplificação dos Símbolos do Pseudocódigo
+
+Para ilustrar os símbolos, considere um **Grafo $G = (V, E)$** com 4 vértices: $V = \{1, 2, 3, 4\}$.
+* Origem: Vértice $1$.
+* Arestas e pesos:
+  * De $1$ para $2$ com peso $4$ ($v_{12} = 4$)
+  * De $1$ para $3$ com peso $2$ ($v_{13} = 2$)
+  * De $3$ para $2$ com peso $1$ ($v_{32} = 1$)
+  * De $3$ para $4$ com peso $5$ ($v_{34} = 5$)
+
+---
+
+#### 1. Conjuntos e Estuturas Principais
+
+* **$V$ (Conjunto de Vértices)**: Representa a totalidade dos nós/vértices do grafo.
+  * *Exemplo*: $V = \{1, 2, 3, 4\}$.
+
+* **$A$ (Conjunto de Vértices Abertos / Não Finalizados)**: Contém os vértices cujos caminhos mínimos definitivos ainda não foram totalmente processados.
+  * *Exemplo Inicial*: $A \leftarrow V \implies A = \{1, 2, 3, 4\}$.
+  * *Após processar o vértice $1$*: $A \leftarrow A - \{1\} \implies A = \{2, 3, 4\}$.
+
+* **$F$ (Conjunto de Vértices Fechados / Finalizados)**: Guarda os vértices que já têm a menor distância em relação à origem permanentemente determinada.
+  * *Exemplo Inicial*: $F \leftarrow \varnothing$ (conjunto vazio).
+  * *Após processar o vértice $1$*: $F \leftarrow F \cup \{1\} \implies F = \{1\}$.
+
+* **$N^+(r)$ (Vizinhança de Saída do Vértice $r$)**: O conjunto de todos os vértices $i$ para os quais existe uma aresta direcionada partindo de $r$ ($r \to i$).
+  * *Exemplo*: Se $r = 3$, $N^+(3) = \{2, 4\}$, pois existem arestas saindo do vértice $3$ para os vértices $2$ e $4$.
+
+* **$S$ (Conjunto de Vértices Candidatos a Atualização)**: Interseção entre os vértices ainda abertos ($A$) e os vizinhos de saída do vértice $r$ atual ($N^+(r)$), dada por $S \leftarrow A \cap N^+(r)$.
+  * *Exemplo*: Se $A = \{2, 3, 4\}$ e $r = 1$ com $N^+(1) = \{2, 3\}$, então $S = \{2, 3, 4\} \cap \{2, 3\} = \{2, 3\}$.
+
+---
+
+#### 2. Variáveis de Estado e Distâncias
+
+* **$d_{1i}$ ou $d^k_{1i}$ (Distância Estimada de $1$ a $i$)**: Representa o menor custo/comprimento acumulado conhecido para ir da origem (vértice $1$) até o vértice $i$ na iteração $k$.
+  * *Exemplo Inicial*: $d_{11} \leftarrow 0$ (distância para si mesmo é zero) e $d_{1i} \leftarrow +\infty$ para todos os outros ($d_{12} = \infty, d_{13} = \infty, d_{14} = \infty$).
+
+* **$+\infty$ (Infinito)**: Valor inicial atribuído às distâncias para indicar que o vértice ainda não é alcançável a partir da origem.
+
+* **$\text{rot}(i)$ (Rótulo / Ancessor do Vértice $i$)**: Armazena o vértice anterior a $i$ no caminho mínimo. É utilizado para reconstruir o caminho percorrido ao final do algoritmo.
+  * *Exemplo Inicial*: $\text{rot}(i) \leftarrow 0, \forall \, i$ (nenhum predecessor definido).
+  * *Se o caminho para $2$ passa por $3$*: $\text{rot}(2) \leftarrow 3$.
+
+* **$k$ (Contador de Iterações)**: Contador que indica o passo/ciclo atual do laço principal.
+  * *Exemplo Inicial*: $k \leftarrow 0$. No primeiro ciclo do `enquanto`, é incrementado: $k \leftarrow k + 1 \implies k = 1$.
+
+* **$r$ (Vértice Base Selecionado)**: O vértice pertencente a $A$ que possui a menor distância estimada $d_{1r}$ no momento.
+  * *Exemplo*: Se $A = \{2, 3, 4\}$ com distâncias $d_{12} = 4, d_{13} = 2, d_{14} = 5$, escolhe-se $r = 3$, pois $\min(4, 2, 5) = 2$.
+
+* **$v_{ri}$ (Peso da Aresta de $r$ a $i$)**: O custo direto da aresta do vértice base $r$ até o vértice vizinho $i$.
+  * *Exemplo*: Se $r = 3$ e $i = 2$, $v_{32} = 1$.
+
+* **$p$ (Variável Auxiliar de Comparação)**: Armazena temporariamente o menor valor entre a distância atual de um vértice $i$ ($d^{k-1}_{1i}$) e a nova distância passando por $r$ ($d_{1r} + v_{ri}$).
+  * *Exemplo*: Para $i = 2$, com $d^{k-1}_{12} = 4$, $d_{13} = 2$ e $v_{32} = 1$:
+    $$p \leftarrow \min[4, (2 + 1)] = \min[4, 3] = 3$$
 
 ### Algoritmo de Bellman-Ford
 
@@ -1187,6 +1286,131 @@ Início ORDENACAO_TOPOLOGICA(G = (V, A));
         fim-para
 
     fim-enquanto
+
+Fim.
+```
+
+### Dijkstra:
+
+```text
+Início DIJKSTRA(G = (V, M));  // M é a matriz de adjacência ponderada
+
+    // Inicialização
+    d[1] ← 0;
+    d[i] ← +∞, ∀ i ∈ V - {1};
+    S ← {1};
+
+    A ← V;
+    F ← ∅;
+    rot[i] ← 0, ∀ i ∈ V;
+    k ← 0;
+
+    enquanto (A ≠ ∅) faça
+
+        k++;
+
+        // Seleciona o vértice não visitado de menor distância
+        r ← vértice i ∈ A tal que d[i] = min{d[j] | j ∈ A};
+
+        F ← F ∪ {r};
+        A ← A - {r};
+
+        // Encontra os vizinhos ainda não visitados de r
+        S ← ∅;
+
+        para cada vértice i ∈ A faça
+            se M[r][i] ≠ 0 então
+                S ← S ∪ {i};
+            fim-se
+        fim-para
+
+        // Atualiza as distâncias dos vértices adjacentes
+        para cada vértice i ∈ S faça
+
+            p ← min(d[i], d[r] + M[r][i]);
+
+            se (p < d[i]) então
+                d[i] ← p;
+                rot[i] ← r;
+            fim-se
+
+        fim-para
+
+    fim-enquanto
+
+Fim.
+```
+
+### Bellmann-Ford:
+
+```text
+Início BELLMAN_FORD(G = (V, M));  // M é a matriz de adjacência ponderada
+
+    // Inicialização das distâncias e predecessores
+    d[1] ← 0;
+    d[i] ← +∞, ∀ i ∈ V - {1};
+    rot[i] ← 0, ∀ i ∈ V;
+
+    // Relaxamento das arestas
+    enquanto (∃ (j, i) ∈ E tal que d[i] > d[j] + M[j][i]) faça
+
+        para cada vértice j ∈ V faça
+            para cada vértice i ∈ V faça
+
+                se (M[j][i] ≠ 0) e (d[j] ≠ +∞) e
+                   (d[i] > d[j] + M[j][i]) então
+
+                    d[i] ← d[j] + M[j][i];
+                    rot[i] ← j;
+
+                fim-se
+
+            fim-para
+        fim-para
+
+    fim-enquanto
+
+Fim.
+```
+
+### Floyd:
+
+```text
+Início FLOYD(G = (V, E), M); // M é a matriz de valores do grafo
+
+    D ← M;
+    R[i][j] ← i, ∀ i, j ∈ V;
+
+    // Inicializa a matriz de predecessores
+    para cada vértice i ∈ V faça
+        para cada vértice j ∈ V faça
+            se M[i][j] ≠ +∞ então
+                R[i][j] ← j;
+            senão
+                R[i][j] ← 0;
+            fim-se
+        fim-para
+    fim-para
+
+    // Calcula os caminhos mínimos
+    para k ← 1 até n faça
+
+        para i ← 1 até n faça
+
+            para j ← 1 até n faça
+
+                se (i ≠ j) e (D[i][k] + D[k][j] < D[i][j]) então
+
+                    D[i][j] ← D[i][k] + D[k][j];
+                    R[i][j] ← R[i][k];
+
+                fim-se
+
+            fim-para
+
+        fim-para
+
+    fim-para
 
 Fim.
 ```
