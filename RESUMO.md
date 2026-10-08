@@ -1,4 +1,4 @@
-# Resumo da Matéria — Teoria dos Grafos
+# Resumo da Matéria — 1° Bimestre
 
 A **Teoria dos Grafos** é uma área da matemática que estuda as relações entre entidades (objetos) que possuem características ou relações relevantes entre si.
 
