@@ -1,3 +1,4 @@
+package custoMin;
 
 import java.util.Scanner;
 
